@@ -1,1 +1,5 @@
 *.pyc
+.venv/
+__pycache__/
+.cache/
+gpg_group_chat.egg-info/
