@@ -1,0 +1,3 @@
+-e git+https://github.com/jeffhsta/python-gnupg.git@198f2c21f9589d45ee0c51c03ef9f8351e70ec45#egg=gnupg
+pep8==1.7.0
+pytest==2.9.2
