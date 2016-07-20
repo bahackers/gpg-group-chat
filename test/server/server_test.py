@@ -1,4 +1,4 @@
-from gpg_group_chat.server.app import Server
+from gpg_group_chat.server.server import Server
 from unittest.mock import MagicMock, Mock, patch
 
 
