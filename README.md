@@ -41,6 +41,23 @@ $ gpg-group-chat --server
 $ gpg-group-chat --client
 ```
 
+## Basic usage flow
+
+* Server starts with gpg-group-chat --server at 255.255.255.255
+* The client1 starts with gpg-group-chat --client --server-ip=255.255.255.255 --public\_key=public\_key1
+* The client1 connect to the server and the server stores the public key for client1
+* The server send the current list of keys for client1 (contains public\_key1)
+* The client2 starts with gpg-group-chat --client --server-ip=255.255.255.255 --public\_key=public\_key2
+* The client2 connect to the server and the server stores the public key for client2
+* The server send the current list of keys for client1 and client2 (contains public\_key1 and publick\_key2)
+* The client3 starts with gpg-group-chat --client --server-ip=255.255.255.255 --public\_key=public\_key3
+* The client3 connect to the server and the server stores the public key for client3
+* The server send the current list of keys for client1, client2 and client3 (contains public\_key1, public\_key2 and public\_key3)
+* The client2 disconnects from the server
+* the server delete the public key from client 2 from the storage
+* The server send the current list of keys for client1 and client3 (contains public\_key1 and public\_key3)
+...
+
 # Issue board
 
 [Waffle.io/bahackers/gpg-group-chat](https://waffle.io/bahackers/gpg-group-chat)
