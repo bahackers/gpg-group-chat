@@ -1,2 +1,4 @@
-def start():
-    print('Hello friend!')
+class Client():
+
+    def start(self):
+        print('Hello friend!')

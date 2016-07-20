@@ -1,4 +1,4 @@
-from gpg_group_chat import start_client, start_server
+from gpg_group_chat import Client, Server
 import sys
 import getopt
 
@@ -12,9 +12,9 @@ def main():
 
     for arg in args:
         if '--server' in arg:
-            start_server()
+            Server().start(9999, '0.0.0.0')
         elif '--client' in arg:
-            start_client()
+            Client().start()
         else:
             print('Helper will be available soon!')
 
