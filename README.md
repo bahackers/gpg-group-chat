@@ -35,3 +35,7 @@ $ gpg-group-chat --server
 ```shell
 $ gpg-group-chat --client
 ```
+
+# Issue board
+
+[Waffle.io/bahackers/gpg-group-chat](https://waffle.io/bahackers/gpg-group-chat)
