@@ -10,7 +10,7 @@ class Server():
         self._working = False
 
     def start(self, port, target):
-        print('Server listening on %s:%d' % (target, port))
+        print('Server is not done yet!')
         self._working = True
         try:
             self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
