@@ -13,9 +13,9 @@ class Client():
     def start(self):
         print('Starting Client...')
         
-        target = 'localhost'
-        port = 9999
-        self._nickname = 'Riad'
+        target = raw_input('Server: ')
+        port = raw_input('Port: ')
+        self._nickname = raw_input('Nickname: ')
 
         self._working = True
         try:
@@ -35,6 +35,28 @@ class Client():
 
     def _chat_handler(self):
         while self._working:
-            msg = raw_input('<You> ')                      
-            self._socket.send('<'+self._nickname+'> '+msg)
+            server_socket, addr = self._socket, self._socket.getpeername()
 
+            thread_event = threading.Event()
+            args = (server_socket, thread_event)
+            chat_thread = threading.Thread(target=self._chat_update, args=args)
+
+            chat_thread.start()
+            self._thread_events[addr] = thread_event
+
+            msg = raw_input('<You> ')                     
+            if not msg:
+                break
+            else:
+                self._socket.send('<'+self._nickname+'> '+msg)
+
+    @staticmethod
+    def _chat_update(server_socket, thread_event):
+        while not thread_event.is_set():    
+            data = server_socket.recv(1024)
+            
+            if not data:
+                break
+            else:
+                print(data)
+                
