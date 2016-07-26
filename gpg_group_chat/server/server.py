@@ -49,3 +49,4 @@ class Server():
                 break
             else:
                 print('[INFO] Received: %s' % data)
+                client_socket.sendall(b'\rACK{}\n')
