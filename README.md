@@ -39,3 +39,7 @@ $ gpg-group-chat --client
 # Issue board
 
 [Waffle.io/bahackers/gpg-group-chat](https://waffle.io/bahackers/gpg-group-chat)
+
+# Continous Integration Pipeline
+
+[![Build Status](https://snap-ci.com/bahackers/gpg-group-chat/branch/master/build_image)](https://snap-ci.com/bahackers/gpg-group-chat/branch/master)
