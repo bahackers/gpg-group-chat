@@ -1,4 +1,4 @@
 class Client():
 
-    def start(self):
+    def start(self, port, host):
         print('Hello friend!')
