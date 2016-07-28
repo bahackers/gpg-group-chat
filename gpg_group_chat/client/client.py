@@ -9,15 +9,10 @@ class Client():
         self._socket = None
         self._connected = False
         self._nickname = 'anonymous'
-        self._key = 'no-key'
 
-    def start(self, server_ip = None, server_port = None, nickname = None):
+    def start(self, server_ip, server_port, nickname = None):
         if nickname != None:
             self._nickname = nickname
-        if server_ip == None:
-            print('no server addr')
-            return
-        self._key = 'no-key'
         print('Hello friend ' + self._nickname)
         dest = (server_ip, server_port)
         try:
@@ -25,11 +20,7 @@ class Client():
         except:
             print('error opening socket')
             return;
-        success = self.__start_protocol()
-        if(success):
-            self.__handle_messages()
-        else:
-            print('error to stabilish connection')
+        self.__handle_messages()
 
     def __start_protocol(self):
         msg = 'hello, i am ' + self._nickname + ',' + self._key
@@ -49,10 +40,9 @@ class Client():
         return True
 
     def __handle_messages(self):
-        #exemple found here: http://www.bogotobogo.com/python/python_network_programming_tcp_server_client_chat_server_chat_client_select.php
         socket_list = [sys.stdin, self._socket]
         self.__prompt()
-        while 1:
+        while True:
             ready_to_read,ready_to_write,in_error = select.select(socket_list , [], [])
             for sock in ready_to_read:
                 if sock == self._socket:
@@ -70,7 +60,6 @@ class Client():
                     # user entered a message
                     msg = sys.stdin.readline()
                     msg = '['+self._nickname+'] ' + msg
-                    msg = self.__gpg_encrypt(msg)
                     self._socket.send(msg.encode('utf-8'))
                     self.__prompt()
 
@@ -81,3 +70,4 @@ class Client():
 
     def __gpg_encrypt(self,msg):
         return msg
+        sys.stdout.flush()
