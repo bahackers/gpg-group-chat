@@ -22,8 +22,6 @@ class Client():
         dest = (server_ip, server_port)
         try:
             self._socket = socket.create_connection(dest)
-            #self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            #self._socket.connect(dest)
         except:
             print('error opening socket')
             return;
