@@ -16,17 +16,19 @@ def parse_args():
     parser.add_argument('-t', '--target',
                         metavar='<target>',
                         default='127.0.0.1',
-                        help='target connect to the server')
+                        help='an IP or a range of IP that is alowed to ' +
+                             'connect when running in server mode')
 
     parser.add_argument('-p', '--port',
                         metavar='<port>',
                         default=9999,
                         type=int,
-                        help='the port to run the server')
+                        help='the server port')
 
     parser.add_argument('-H', '--host',
                         metavar='<host>',
                         default='127.0.0.1',
-                        help='the host to connect to')
+                        help='IP adress of the server for connection when ' +
+                             'running in client mode')
 
     return parser.parse_args()
