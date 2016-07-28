@@ -10,7 +10,7 @@ class Server():
         self._working = False
 
     def start(self, port, target):
-        print('Starting server...')
+        print('Server listening on %s:%d' % (target, port))
         self._working = True
         try:
             self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
