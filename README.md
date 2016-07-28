@@ -1,6 +1,11 @@
 GPG group chat
 ==============
 
+[![GitHub version](https://img.shields.io/badge/version-dev-brightgreen.svg)]()
+[![Snap CI branch](https://img.shields.io/snap-ci/bahackers/gpg-group-chat/master.svg?maxAge=2592000)](https://snap-ci.com/bahackers/gpg-group-chat/branch/master)
+[![Python version](https://img.shields.io/badge/python-3.4-blue.svg)]()
+[![license](https://img.shields.io/badge/license-GPL-blue.svg?maxAge=2592000)]()
+
 # Setting up
 
 First of all make sure that your have Python 3, pip and virtualenv installed.
