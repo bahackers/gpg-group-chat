@@ -44,18 +44,18 @@ $ gpg-group-chat --client
 ## Basic usage flow
 
 1. Server starts with gpg-group-chat --server at 192.168.0.1
-2. The client1 starts with gpg-group-chat --client --server-ip=192.168.0.1 --public\_key=public\_key1
-3. The client1 connect to the server and the server stores the public key for client1
-4. The server send the current list of keys for client1 (contains public\_key1)
-5. The client2 starts with gpg-group-chat --client --server-ip=192.168.0.1 --public\_key=public\_key2
-6. The client2 connect to the server and the server stores the public key for client2
-7. The server send the current list of keys for client1 and client2 (contains public\_key1 and publick\_key2)
-8. The client3 starts with gpg-group-chat --client --server-ip=192.168.0.1 --public\_key=public\_key3
-9. The client3 connect to the server and the server stores the public key for client3
-10. The server send the current list of keys for client1, client2 and client3 (contains public\_key1, public\_key2 and public\_key3)
+2. The client1 starts with gpg-group-chat --client --server-ip=192.168.0.1 --public-key=public-key1
+3. The client1 connect to the server and the it stores the public key for client1
+4. The server send the current list of keys for client1 (contains public key1)
+5. The client2 starts with gpg-group-chat --client --server-ip=192.168.0.1 --public-key=public-key2
+6. The client2 connect to the server and the it stores the public key for client2
+7. The server send the current list of keys for client1 and client2 (contains public key1 and public key2)
+8. The client3 starts with gpg-group-chat --client --server-ip=192.168.0.1 --public-key=public-key3
+9. The client3 connect to the server and the it stores the public key for client3
+10. The server send the current list of keys for client1, client2 and client3 (contains public key1, public key2 and public key3)
 11. The client2 disconnects from the server
 12. the server delete the public key from client 2 from the storage
-13. The server send the current list of keys for client1 and client3 (contains public\_key1 and public\_key3)
+13. The server send the current list of keys for client1 and client3 (contains public key1 and public key3)
 ...
 
 # Issue board
