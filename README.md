@@ -1,9 +1,7 @@
 GPG group chat
 ==============
 
-[![Snap CI branch](https://img.shields.io/snap-ci/bahackers/gpg-group-chat/master.svg?maxAge=2592000)][snap-ci]
-
-[snap-ci]: (https://snap-ci.com/bahackers/gpg-group-chat/branch/master)
+[![Snap CI branch](https://img.shields.io/snap-ci/bahackers/gpg-group-chat/master.svg?maxAge=2592000)](https://snap-ci.com/bahackers/gpg-group-chat/branch/master)
 
 
 # Setting up
