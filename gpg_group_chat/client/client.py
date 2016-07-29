@@ -23,23 +23,6 @@ class Client():
             return
         self.__handle_messages()
 
-    def __start_protocol(self):
-        msg = 'hello, i am ' + self._nickname + ',' + self._key
-        self._socket.sendall(msg.encode('utf-8'))
-        msg = self._socket.recv(1024)
-        if not msg:
-            print('no response from server')
-        else:
-            if(msg.startswith(b'ACK')):
-                print('the server accepted your connection')
-                print('the connected users are:')
-                print(msg[3:])
-            elif(msg.startswith(b'NACK')):
-                print('the server refused your connection')
-            else:
-                print('unknown answer from server, be careful')
-        return True
-
     def __handle_messages(self):
         socket_list = [sys.stdin, self._socket]
         self.__prompt()
@@ -66,8 +49,4 @@ class Client():
     @staticmethod
     def __prompt():
         sys.stdout.write('[Me] ')
-        sys.stdout.flush()
-
-    def __gpg_encrypt(self, msg):
-        return msg
         sys.stdout.flush()
