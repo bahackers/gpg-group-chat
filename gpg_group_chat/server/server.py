@@ -1,5 +1,6 @@
 import socket
 import threading
+import ssl
 
 
 class Server():
@@ -26,15 +27,36 @@ class Server():
     def _accept_connections(self):
         while self._working:
             client_socket, addr = self._socket.accept()
-            print('Connection accepted from %s:%d' % addr)
+            print('Connection initiated with %s:%d' % addr)
+            print('Verifying SSL encryption')
 
-            thread_event = threading.Event()
-            args = (client_socket, thread_event)
-            client_thread = threading.Thread(target=self._client_handler,
-                                             args=args)
+            try:
+                ok = True
+                sslsocket = ssl.wrap_socket(client_socket,
+                                            server_side=True,
+                                            certfile="./ssl_certs/server.crt",
+                                            keyfile="./ssl_certs/server.key")
 
-            client_thread.start()
-            self._thread_events[addr] = thread_event
+            except ssl.SSLError:
+                ok = False
+                client_socket.close()
+                print("SSL Error")
+                pass
+            except socket.error:
+                ok = False
+                client_socket.close()
+                print("Connection Error")
+                pass
+            finally:
+                if ok:
+                    thread_event = threading.Event()
+                    args = (sslsocket, thread_event)
+                    client_thread = threading.Thread(
+                        target=self._client_handler,
+                        args=args)
+
+                    client_thread.start()
+                    self._thread_events[addr] = thread_event
 
     def _stop_all_threads(self):
         for thread_event in self._thread_events.values():
@@ -43,9 +65,9 @@ class Server():
     @staticmethod
     def _client_handler(client_socket, thread_event):
         while not thread_event.is_set():
-            data = client_socket.recv(1024)
+            data = client_socket.read()
 
             if not data:
                 break
             else:
-                print('[INFO] Received: %s' % data)
+                print('[INFO] Received: %s' % data.decode('utf-8'))
