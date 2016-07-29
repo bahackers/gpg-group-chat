@@ -18,10 +18,10 @@ def test_should_open_a_listen_port(socket):
     server._socket.listen.assert_called_once_with(1)
 
 
-@patch('socket.socket')
 @patch('threading.Thread')
 @patch('threading.Event')
-def test_should_accept_connection_and_create_a_thread_to_handle_it(Event, Thread, socket):
+@patch('ssl.wrap_socket')
+def test_should_accept_connection_and_create_a_thread_to_handle_it(Event, Thread, wrap_socket):
     server = Server()
     server._working = True
 
@@ -29,7 +29,7 @@ def test_should_accept_connection_and_create_a_thread_to_handle_it(Event, Thread
         server._working = False
         return (None, ('', 0))
 
-    server._socket = socket()
+    server._socket = wrap_socket
     server._socket.accept.side_effect = side_effect
 
     server._accept_connections()
