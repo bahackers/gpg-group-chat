@@ -3,3 +3,4 @@
 __pycache__/
 .cache/
 gpg_group_chat.egg-info/
+Gemfile.lock
