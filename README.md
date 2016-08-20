@@ -53,11 +53,11 @@ Once the gem **mdl** is installed run:
 $ ./run md-lint
 ```
 
-If the gem in not installed, its possible installing it using the command:
+If the gem is not installed, its possible installing it using the command:
 
 ```shell
-gem install bundler
-bundle install
+$ gem install bundler
+$ bundle install
 ```
 
 ## Issue board
