@@ -45,6 +45,21 @@ $ gpg-group-chat --server
 $ gpg-group-chat --client
 ```
 
+## Run the markdown lint
+
+Once the gem **mdl** is installed run:
+
+```shell
+$ ./run md-lint
+```
+
+If the gem in not installed, its possible installing it using the command:
+
+```shell
+gem install bundler
+bundle install
+```
+
 ## Issue board
 
 [Waffle.io/bahackers/gpg-group-chat](https://waffle.io/bahackers/gpg-group-chat)
