@@ -1,0 +1,39 @@
+#!/bin/bash
+
+function setup {
+        echo "Setting the GPG Group Chat up"
+        pip install --upgrade pip setuptools
+        pip install -r requirements.txt
+        python setup.py develop
+        echo "Done."
+}
+
+function runUnitTests {
+        py.test ./test
+        echo "Done."
+}
+
+function runPep8 {
+        echo "Executing pep8..."
+        pep8 ./gpg_group_chat
+        echo "Done."
+}
+
+function runMdLint {
+        echo "Executing markdown lint...."
+        bundle exec mdl --style lint_style.rb .
+        echo "Done."
+}
+
+if [ "$1" == 'test' ]; then
+        set -e
+        runPep8
+        runUnitTests "${@:2}"
+elif [ "$1" == 'lint' ]; then
+        set -e
+        runPep8
+elif [ "$1" == 'md-lint' ]; then
+        runMdLint
+elif [ "$1" == 'setup' ]; then
+        setup
+fi
