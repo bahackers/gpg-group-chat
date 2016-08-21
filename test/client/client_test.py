@@ -13,6 +13,8 @@ class ClientTest(TestCase):
 
     def setUp(self):
         self.create_connection = patch('socket.create_connection').start()
+        self.exit = patch('sys.exit').start()
+
         self.client = Client()
 
     def test_connect_to_a_server(self):
@@ -23,3 +25,17 @@ class ClientTest(TestCase):
         self.client.start(9999, '127.0.0.1')
 
         self.create_connection.assert_called_once_with(('127.0.0.1', 9999))
+
+    def test_to_connect_to_unexist_server(self):
+        def side_effect(dest):
+            raise ConnectionRefusedError(111, 'connection refused')
+
+        def _handle_messages():
+            pass
+
+        self.create_connection.side_effect = side_effect
+        self.client._handle_messages = _handle_messages
+
+        self.client.start(9999, 'server.runkown')
+
+        self.exit.assert_called_once_with(1)

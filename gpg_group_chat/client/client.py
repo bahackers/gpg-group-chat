@@ -12,11 +12,13 @@ class Client():
     def start(self, server_port, server_ip):
         print('Hello friend')
         dest = (server_ip, server_port)
+
         try:
             self._socket = socket.create_connection(dest)
-        except:
-            print('error opening socket')
-            return
+        except ConnectionRefusedError as err:
+            print('Connection refused')
+            sys.exit(1)
+
         self._handle_messages()
 
     def _handle_messages(self):
