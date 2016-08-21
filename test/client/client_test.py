@@ -1,19 +1,20 @@
 from gpg_group_chat.client.client import Client
 from unittest import TestCase
 from unittest.mock import patch
+from unittest.mock import Mock
+from socket import socket as SocketType
+import sys
 
 
-# to test:
-# - open a connection to an existent server
-# - try toopen a connection to an inexistent server
-# - try to open a connection without network connection
-# - send a message to te server and receive response
-# - receive message from the server
 class ClientTest(TestCase):
 
     def setUp(self):
         self.create_connection = patch('socket.create_connection').start()
         self.exit = patch('sys.exit').start()
+        self.readline = patch('sys.stdin.readline').start()
+        self.select = patch('select.select').start()
+        self.socket = Mock(SocketType)
+        self.create_connection.return_value = self.socket
 
         self.client = Client()
 
@@ -39,3 +40,15 @@ class ClientTest(TestCase):
         self.client.start(9999, 'server.runkown')
 
         self.exit.assert_called_once_with(1)
+
+    def test_send_a_message_to_the_server(self):
+        def side_effect(msg):
+            self.client._working = False
+
+        self.socket.send.side_effect = side_effect
+        self.readline.return_value = 'message'
+        self.select.return_value = ([sys.stdin], None, None)
+
+        self.client.start(9999, '127.0.0.1')
+
+        self.socket.send.assert_called_once_with(b'[*] message')

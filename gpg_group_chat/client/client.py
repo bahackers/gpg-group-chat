@@ -8,6 +8,7 @@ class Client():
 
     def __init__(self):
         self._socket = None
+        self._working = True
 
     def start(self, server_port, server_ip):
         print('Hello friend')
@@ -24,7 +25,7 @@ class Client():
     def _handle_messages(self):
         socket_list = [sys.stdin, self._socket]
         self._prompt()
-        while True:
+        while self._working:
             ready_to_read, _, _ = select.select(socket_list, [], [])
             for sock in ready_to_read:
                 if sock == self._socket:
@@ -39,8 +40,7 @@ class Client():
                         self._prompt()
                 else:
                     # user entered a message
-                    msg = sys.stdin.readline()
-                    msg = '['+self._nickname+'] ' + msg
+                    msg = '[*] %s' % sys.stdin.readline()
                     self._socket.send(msg.encode('utf-8'))
                     self._prompt()
 
