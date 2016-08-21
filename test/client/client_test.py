@@ -1,8 +1,8 @@
 from gpg_group_chat.client.client import Client
-from unittest import TestCase
-from unittest.mock import patch
-from unittest.mock import Mock
 from socket import socket as SocketType
+from unittest import TestCase
+from unittest.mock import Mock
+from unittest.mock import patch
 import sys
 
 
@@ -79,3 +79,10 @@ class ClientTest(TestCase):
 
         self.print_stdout.assert_any_call('\nDisconnected from chat server')
         self.exit.assert_called_once_with(0)
+
+    def test_the_prompt_meyhod_does_not_print_with_break_line_char(self):
+        def side_effect(txt):
+            assert not txt.endswith('\n')
+
+        self.print_stdout.side_effect = side_effect
+        self.client._prompt()
