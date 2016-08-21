@@ -13,6 +13,8 @@ class ClientTest(TestCase):
         self.exit = patch('sys.exit').start()
         self.readline = patch('sys.stdin.readline').start()
         self.select = patch('select.select').start()
+        self.print_stdout = patch('sys.stdout.write').start()
+
         self.socket = Mock(SocketType)
         self.create_connection.return_value = self.socket
 
@@ -52,3 +54,15 @@ class ClientTest(TestCase):
         self.client.start(9999, '127.0.0.1')
 
         self.socket.send.assert_called_once_with(b'[*] message')
+
+    def test_receive_a_message_from_the_server(self):
+        def side_effect(size):
+            self.client._working = False
+            return b'message from server'
+
+        self.socket.recv.side_effect = side_effect
+        self.select.return_value = ([self.socket], None, None)
+
+        self.client.start(9999, '127.0.0.1')
+
+        self.print_stdout.assert_any_call('message from server')
