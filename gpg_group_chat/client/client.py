@@ -8,24 +8,20 @@ class Client():
 
     def __init__(self):
         self._socket = None
-        self._connected = False
-        self._nickname = 'anonymous'
 
-    def start(self, server_ip, server_port, nickname=None):
-        if nickname is not None:
-            self._nickname = nickname
-        print('Hello friend ' + self._nickname)
+    def start(self, server_port, server_ip):
+        print('Hello friend')
         dest = (server_ip, server_port)
         try:
             self._socket = socket.create_connection(dest)
         except:
             print('error opening socket')
             return
-        self.__handle_messages()
+        self._handle_messages()
 
-    def __handle_messages(self):
+    def _handle_messages(self):
         socket_list = [sys.stdin, self._socket]
-        self.__prompt()
+        self._prompt()
         while True:
             ready_to_read, _, _ = select.select(socket_list, [], [])
             for sock in ready_to_read:
@@ -38,15 +34,14 @@ class Client():
                     else:
                         # print data
                         sys.stdout.write(data.decode('utf-8'))
-                        self.__prompt()
+                        self._prompt()
                 else:
                     # user entered a message
                     msg = sys.stdin.readline()
                     msg = '['+self._nickname+'] ' + msg
                     self._socket.send(msg.encode('utf-8'))
-                    self.__prompt()
+                    self._prompt()
 
-    @staticmethod
-    def __prompt():
+    def _prompt(self):
         sys.stdout.write('[Me] ')
         sys.stdout.flush()
