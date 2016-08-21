@@ -66,3 +66,16 @@ class ClientTest(TestCase):
         self.client.start(9999, '127.0.0.1')
 
         self.print_stdout.assert_any_call('message from server')
+
+    def test_exit_when_disconnect_with_the_server(self):
+        def side_effect(size):
+            self.client._working = False
+            return None
+
+        self.socket.recv.side_effect = side_effect
+        self.select.return_value = ([self.socket], None, None)
+
+        self.client.start(9999, '127.0.0.1')
+
+        self.print_stdout.assert_any_call('\nDisconnected from chat server')
+        self.exit.assert_called_once_with(0)

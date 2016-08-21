@@ -33,7 +33,7 @@ class Client():
                     data = sock.recv(4096)
                     if not data:
                         print('\nDisconnected from chat server')
-                        sys.exit()
+                        sys.exit(0)
                     else:
                         # print data
                         sys.stdout.write(data.decode('utf-8'))
